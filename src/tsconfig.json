@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "outDir": "../build",
+    "allowJs": false,
+    "checkJs": false,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2021",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["esnext.array"],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["../node_modules/*.d.ts", "./src/*.d.ts"]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noStrictGenericChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

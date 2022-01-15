@@ -1,0 +1,15 @@
+name: Run tests
+
+on:
+  push
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: run tests
+        run: docker-compose -f ./docker/test/docker-compose.test.yml up --exit-code-from brainx_test

@@ -2,11 +2,64 @@
   "name": "brainx_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "nodemon src/index.ts",
+    "start:prod": "npm run build && node build/index.js",
+    "build": "tsc --build src/tsconfig.json",
+    "lint": "npx prettier --check src/ && npx prettier --check test/",
+    "lintFix": "npx prettier --write src/ && npx prettier --write test/",
+    "unitTests": "jest unit",
+    "integrationTests": "jest int",
+    "componentTests": "jest comp",
+    "test": "npm run unitTests && npm run integrationTests && npm run componentTests",
+    "prepare": "husky install"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Tomasz Rydzewski",
+  "license": "ISC",
+  "dependencies": {
+    "dayjs": "1.10.7",
+    "dotenv": "14.2.0",
+    "knex": "0.95.15",
+    "koa": "2.13.4",
+    "koa-joi-router": "8.0.0",
+    "pg": "8.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "27.4.0",
+    "@types/koa": "2.13.4",
+    "@types/koa-joi-router": "8.0.4",
+    "@types/pg": "8.6.4",
+    "@types/supertest": "2.0.11",
+    "husky": "7.0.4",
+    "jest": "27.4.7",
+    "nodemon": "2.0.15",
+    "prettier": "2.5.1",
+    "supertest": "6.2.2",
+    "ts-jest": "27.1.3",
+    "ts-node": "10.4.0",
+    "typescript": "4.5.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "test/tsconfig.test.json",
+        "diagnostics": true
+      }
+    },
+    "testMatch": [
+      "**/test/**/*.+(unit.ts|int.ts|comp.ts)"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ]
+  }
 }

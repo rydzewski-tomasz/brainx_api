@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+  brainx_api_test_world:
+    name: brainx_api_test_world
+
+services:
+  brainx_api:
+    build:
+      context: ../..
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ../../src:/brainx_api/src
+      - ./dev.env:/brainx_api/.env
+    networks:
+      - brainx_api_test_world
+    ports:
+      - "5101:3000"
+    command: ./docker/wait-for-it.sh brainx_db:5432 -- npm run start:dev
+    depends_on:
+      - brainx_db
+
+  brainx_db:
+    image: postgres:14.1
+    restart: always
+    environment:
+      PGUSER: user
+      PGPASSWORD: user
+      POSTGRES_DB: brainx_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ../../data/psql:/var/lib/postgresql/data
+    ports:
+      - "5102:5432"
+    networks:
+      - brainx_api_test_world

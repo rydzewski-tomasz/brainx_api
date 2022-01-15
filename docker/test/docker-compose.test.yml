@@ -1,0 +1,36 @@
+version: '3.8'
+
+networks:
+  brainx_api_test_world:
+    name: brainx_api_test_world
+
+services:
+  brainx_test:
+    build:
+      context: ../..
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ../../src:/brainx_api/src
+      - ../../test:/brainx_api/test
+      - ../../package.json:/brainx_api/package.json
+      - ./test.env:/brainx_api/test.env
+    networks:
+      - brainx_api_test_world
+    command: ./docker/wait-for-it.sh brainx_test_db:5432 -- bash -c "npm audit --audit-level=moderate && npm run lint && npm test"
+    depends_on:
+      - brainx_test_db
+
+  brainx_test_db:
+    image: postgres:14.1
+    restart: always
+    environment:
+      PGUSER: user
+      PGPASSWORD: test
+      POSTGRES_DB: brainx_test_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5202:5432"
+    networks:
+      - brainx_api_test_world
