@@ -16,7 +16,20 @@ services:
       - brainx_api_test_world
     ports:
       - "5101:3000"
-    command: ./docker/wait-for-it.sh brainx_db:5432 -- npm run start:dev
+    command: npm run start:dev
+    depends_on:
+      - brainx_migrate
+
+  brainx_migrate:
+    build:
+      context: ../..
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ../../src:/brainx_api/src
+      - ./dev.env:/brainx_api/.env
+    networks:
+      - brainx_api_test_world
+    command: ./docker/wait-for-it.sh brainx_db:5432 -- npm run dbMigrate
     depends_on:
       - brainx_db
 

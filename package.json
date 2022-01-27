@@ -12,6 +12,7 @@
     "unitTests": "jest unit",
     "integrationTests": "jest int",
     "componentTests": "jest comp",
+    "dbMigrate": "knex migrate:latest",
     "test": "npm run unitTests && npm run integrationTests && npm run componentTests",
     "prepare": "husky install"
   },
