@@ -30,7 +30,5 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: test
       POSTGRES_HOST_AUTH_METHOD: trust
-    ports:
-      - "5202:5432"
     networks:
       - brainx_api_test_world
