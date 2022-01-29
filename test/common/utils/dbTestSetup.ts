@@ -29,6 +29,10 @@ async function createRandomDb(dbName: string): Promise<Knex> {
   return knex({ ...config.test, connection: { ...config.test.connection, database: dbName } });
 }
 
+async function disconnect() {
+  await db.destroy();
+}
+
 async function dropDb() {
   console.log(`Drop db: ${dbName} started`);
   await db.destroy();
@@ -39,6 +43,7 @@ async function dropDb() {
 }
 
 export default {
-  createDb: createDb,
-  dropDb
+  createDb,
+  dropDb,
+  disconnect
 };

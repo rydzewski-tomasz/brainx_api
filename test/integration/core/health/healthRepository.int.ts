@@ -27,7 +27,7 @@ describe('Test healthRepository', () => {
 
   it('GIVEN invalid db connection WHEN isDbConnected THEN return false', async () => {
     // GIVEN
-    await dbTestSetup.dropDb();
+    await dbTestSetup.disconnect();
 
     // WHEN
     const result = await healthRepository.isDbConnected();
