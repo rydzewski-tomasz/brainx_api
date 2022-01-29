@@ -9,11 +9,11 @@ let dbName: string;
 
 async function createDb(): Promise<AppDbClient> {
   try {
-    db = knex(config.test);
     dbName = 'brainx_test_db_' + randomUtil.generateRandomString();
-    console.log(`Start db: ${dbName}`);
-    await db.raw(`CREATE DATABASE ${dbName}`);
+    console.log(`Create db: ${dbName} started`);
+    db = await createRandomDb(dbName);
     await db.migrate.latest();
+    console.log(`Create db: ${dbName} finished`);
     return { getDb: () => db };
   } catch (e) {
     console.error('Test db connection problem! Maybe docker-compose brainx_test_db service not started?');
@@ -22,13 +22,23 @@ async function createDb(): Promise<AppDbClient> {
   }
 }
 
+async function createRandomDb(dbName: string): Promise<Knex> {
+  const initDb = knex(config.test);
+  await initDb.raw(`CREATE DATABASE ${dbName}`);
+  await initDb.destroy();
+  return knex({ ...config.test, connection: { ...config.test.connection, database: dbName } });
+}
+
 async function dropDb() {
-  console.log(`Stop db: ${dbName}`);
-  await db.raw(`DROP DATABASE ${dbName}`);
+  console.log(`Drop db: ${dbName} started`);
   await db.destroy();
+  const initDb = knex(config.test);
+  await initDb.raw(`DROP DATABASE ${dbName}`);
+  await initDb.destroy();
+  console.log(`Drop db: ${dbName} finished`);
 }
 
 export default {
-  createDb,
+  createDb: createDb,
   dropDb
 };

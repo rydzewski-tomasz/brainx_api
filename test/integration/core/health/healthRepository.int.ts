@@ -1,13 +1,11 @@
 import { HealthRepository, healthRepositoryFactory } from '../../../../src/core/health/interfaces/db/healthRepository';
 import dbTestSetup from '../../../common/utils/dbTestSetup';
-import { AppDbClient } from '../../../../src/core/interfaces/db/dbSetup';
 
 describe('Test healthRepository', () => {
-  let dbClient: AppDbClient;
   let healthRepository: HealthRepository;
 
   beforeEach(async () => {
-    dbClient = await dbTestSetup.createDb();
+    const dbClient = await dbTestSetup.createDb();
     healthRepository = healthRepositoryFactory(dbClient, {});
   });
 
