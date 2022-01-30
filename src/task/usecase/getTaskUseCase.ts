@@ -10,7 +10,7 @@ export enum GetTaskErrorType {
 export type GetTaskUseCase = (taskId: number) => Promise<Result<Task, GetTaskErrorType>>;
 
 export function getTaskUseCaseFactory({ dbClient }: AppContext): GetTaskUseCase {
-  const taskRepository = taskRepositoryFactory(dbClient, { dbClient });
+  const taskRepository = taskRepositoryFactory(dbClient);
   return getTaskUseCase({ taskRepository });
 }
 

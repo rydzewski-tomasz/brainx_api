@@ -1,12 +1,11 @@
 import { DbContext } from '../../../app/context/appContext';
-import { AppDbClient } from '../../../interfaces/db/dbSetup';
 
 export interface HealthRepository {
   isDbConnected: () => Promise<boolean>;
 }
 
-export function healthRepositoryFactory(dbClient: AppDbClient, _: DbContext): HealthRepository {
-  const { getDb } = dbClient;
+export function healthRepositoryFactory(dbContext: DbContext): HealthRepository {
+  const { getDb } = dbContext;
 
   return {
     isDbConnected: async () => {

@@ -6,7 +6,7 @@ describe('Test healthRepository', () => {
 
   beforeEach(async () => {
     const dbClient = await dbTestSetup.createDb();
-    healthRepository = healthRepositoryFactory(dbClient, { dbClient });
+    healthRepository = healthRepositoryFactory(dbClient);
   });
 
   afterEach(async () => {

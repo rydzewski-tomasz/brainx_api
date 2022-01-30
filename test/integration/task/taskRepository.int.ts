@@ -15,7 +15,7 @@ describe('taskRepository integration test', () => {
 
   async function setupEnv() {
     const dbClient = await dbTestSetup.createDb();
-    taskRepository = taskRepositoryFactory(dbClient, { dbClient });
+    taskRepository = taskRepositoryFactory(dbClient);
     db = dbClient.getDb();
   }
 

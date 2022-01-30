@@ -1,5 +1,4 @@
 import { Task } from '../../domain/task';
-import { AppDbClient } from '../../../core/interfaces/db/dbSetup';
 import { DbContext } from '../../../core/app/context/appContext';
 import dateUtil from '../../../core/utils/dateUtil';
 
@@ -10,8 +9,8 @@ export interface TaskRepository {
   insert: (task: Task) => Promise<Task>;
 }
 
-export function taskRepositoryFactory(dbClient: AppDbClient, _: DbContext): TaskRepository {
-  const db = dbClient.getDb();
+export function taskRepositoryFactory(dbContext: DbContext): TaskRepository {
+  const db = dbContext.getDb();
 
   return {
     findById: async (id: number): Promise<Task | null> => {
