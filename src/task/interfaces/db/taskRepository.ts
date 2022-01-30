@@ -1,7 +1,7 @@
 import { Task } from '../../domain/task';
-import { AppDbClient } from '../../../interfaces/db/dbSetup';
-import { DbContext } from '../../../app/context/appContext';
-import dateUtil from '../../../utils/dateUtil';
+import { AppDbClient } from '../../../core/interfaces/db/dbSetup';
+import { DbContext } from '../../../core/app/context/appContext';
+import dateUtil from '../../../core/utils/dateUtil';
 
 export const TaskTableName = 'task';
 

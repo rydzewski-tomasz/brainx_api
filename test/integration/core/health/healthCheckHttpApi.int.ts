@@ -21,7 +21,7 @@ describe('Test healthCheck http interface', () => {
     expectResponse(response).toBeSuccess(200);
   });
 
-  it('GIVEN db error from healthCheckUseCase WHEN healthCheck THEN return db error response', async () => {
+  it('GIVEN db errorMiddleware from healthCheckUseCase WHEN healthCheck THEN return db errorMiddleware response', async () => {
     // GIVEN
     jest.spyOn(healthUseCase, 'healthUseCaseFactory').mockReturnValue(async () => createErrorResult(HealthError.DbConnection));
 

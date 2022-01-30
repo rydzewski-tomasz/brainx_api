@@ -10,3 +10,9 @@ export interface Task {
   create: dayjs.Dayjs;
   update?: dayjs.Dayjs;
 }
+
+export const taskFactory = {
+  createTask(input: Pick<Task, 'name' | 'color' | 'description'>): Task {
+    return { ...input, id: 0, create: dayjs.utc() };
+  }
+};

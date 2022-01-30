@@ -1,5 +1,8 @@
-import { Task } from '../../../src/core/task/domain/task';
+import { Task } from '../../../src/task/domain/task';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export function sampleTask(): Task {
   return {
@@ -8,7 +11,7 @@ export function sampleTask(): Task {
     color: '#112233',
     description: 'Sample task description',
     create: dayjs.utc('2022-11-01 22:33'),
-    update: undefined
+    update: dayjs.utc('2022-12-01 20:33')
   };
 }
 

@@ -11,11 +11,12 @@ import { AddressInfo } from 'net';
 let appServer: Server;
 export let requestUtil: SuperTest<any>;
 const config = createConfig();
+export let dbClient: AppDbClient;
 
 export function initFullEnv() {
   return {
     beforeAll: beforeAll(async () => {
-      const dbClient = await createDbClient();
+      dbClient = await createDbClient();
       startTestApp({ config, dbClient });
     }),
     afterAll: afterAll(async () => {
@@ -28,7 +29,7 @@ export function initFullEnv() {
 export function initHttpEnv() {
   return {
     beforeAll: beforeAll(async () => {
-      const dbClient: AppDbClient = { getDb: jest.fn() };
+      dbClient = { getDb: jest.fn() };
       startTestApp({ config, dbClient });
     }),
     afterAll: afterAll(async () => {

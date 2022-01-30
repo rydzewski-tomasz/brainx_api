@@ -1,8 +1,8 @@
 import { taskBuilder } from '../../common/builders/taskBuilder';
-import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../src/core/task/interfaces/db/taskRepository';
+import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../src/task/interfaces/db/taskRepository';
 import dbTestSetup from '../../common/utils/dbTestSetup';
 import { Knex } from 'knex';
-import { Task } from '../../../src/core/task/domain/task';
+import { Task } from '../../../src/task/domain/task';
 
 describe('taskRepository integration test', () => {
   let db: Knex;
