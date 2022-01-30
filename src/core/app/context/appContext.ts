@@ -5,4 +5,4 @@ export type AppContext = Context & { dbContext: DbContext } & {
   dbClient: AppDbClient;
 };
 
-export type DbContext = {};
+export type DbContext = { dbClient: AppDbClient };

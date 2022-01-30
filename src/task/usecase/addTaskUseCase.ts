@@ -5,8 +5,8 @@ import { TaskRepository, taskRepositoryFactory } from '../interfaces/db/taskRepo
 export type AddTaskInput = Pick<Task, 'description' | 'name' | 'color'>;
 export type AddTaskUseCase = (input: AddTaskInput) => Promise<Task>;
 
-export function addTaskUseCaseFactory(ctx: AppContext): AddTaskUseCase {
-  const taskRepository = taskRepositoryFactory(ctx.dbClient, {});
+export function addTaskUseCaseFactory({ dbClient }: AppContext): AddTaskUseCase {
+  const taskRepository = taskRepositoryFactory(dbClient, { dbClient });
   return addTaskUseCase({ taskRepository });
 }
 

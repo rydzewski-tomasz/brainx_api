@@ -8,8 +8,8 @@ export enum HealthError {
 
 export type HealthUseCase = () => Promise<Result<Success, HealthError>>;
 
-export function healthUseCaseFactory(ctx: AppContext): HealthUseCase {
-  const healthRepository = healthRepositoryFactory(ctx.dbClient, ctx.dbClient);
+export function healthUseCaseFactory({ dbClient, dbContext }: AppContext): HealthUseCase {
+  const healthRepository = healthRepositoryFactory(dbClient, dbContext);
   return healthUseCase({ healthRepository });
 }
 

@@ -34,7 +34,7 @@ describe('Add task component test', () => {
 
     // THEN
     const taskId = body.data.id;
-    const onDb = (await taskRepositoryFactory(dbClient, {}).findById(taskId)) as Task;
+    const onDb = (await taskRepositoryFactory(dbClient, { dbClient }).findById(taskId)) as Task;
     expect(onDb).toMatchObject({ name: requestBody.name, description: requestBody.description, color: requestBody.color });
   });
 });

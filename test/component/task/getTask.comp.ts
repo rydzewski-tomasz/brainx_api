@@ -13,7 +13,7 @@ describe('Get task component test', () => {
   let task: Task;
 
   beforeAll(async () => {
-    task = await taskRepositoryFactory(dbClient, {}).insert(sampleTask());
+    task = await taskRepositoryFactory(dbClient, { dbClient }).insert(sampleTask());
   });
 
   it('GIVEN existing task id WHEN getTask THEN return 200 status with task', async () => {
