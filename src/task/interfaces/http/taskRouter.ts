@@ -1,5 +1,5 @@
-import Router, { Spec, Joi } from 'koa-joi-router';
-import { addTaskHandler } from './taskHandler';
+import Router, { Joi, Spec } from 'koa-joi-router';
+import { addTaskHandler, getTaskHandler } from './taskHandler';
 import { handlerFactory } from '../../../core/interfaces/http/handlerFactory';
 
 const router = Router();
@@ -16,6 +16,12 @@ router.route(<Spec>{
     },
     type: 'json'
   }
+});
+
+router.route(<Spec>{
+  handler: handlerFactory(getTaskHandler),
+  method: 'get',
+  path: '/task/:taskId'
 });
 
 export default router;
