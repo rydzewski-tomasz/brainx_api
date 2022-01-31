@@ -22,13 +22,8 @@ function toText(input: dayjs.Dayjs): string {
   return input.format(defaultFormat);
 }
 
-function now(): dayjs.Dayjs {
-  return dayjs.utc().millisecond(0);
-}
-
 export default {
   fromText,
   toText,
-  fromDbDate,
-  now
+  fromDbDate
 };

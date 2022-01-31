@@ -4,7 +4,7 @@ import * as getTaskUseCase from '../../../src/task/usecase/getTaskUseCase';
 import { createErrorResult, createSuccessResult } from '../../../src/core/utils/result';
 import request from '../../common/utils/request';
 import { expectResponse } from '../../common/utils/testUtil';
-import dateUtil from '../../../src/core/utils/dateUtil';
+import dateUtil from '../../../src/core/utils/dateParser';
 import { GetTaskErrorType } from '../../../src/task/usecase/getTaskUseCase';
 
 describe('Get task http api integration tests', () => {

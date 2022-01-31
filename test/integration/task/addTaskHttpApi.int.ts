@@ -3,7 +3,7 @@ import * as addTaskUseCase from '../../../src/task/usecase/addTaskUseCase';
 import { sampleTask } from '../../common/builders/taskBuilder';
 import request from '../../common/utils/request';
 import { expectResponse } from '../../common/utils/testUtil';
-import dateUtil from '../../../src/core/utils/dateUtil';
+import dateUtil from '../../../src/core/utils/dateParser';
 import { HttpErrorType } from '../../../src/core/app/middleware/errorMiddleware';
 
 describe('Add task http api integration tests', () => {

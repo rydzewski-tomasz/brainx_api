@@ -3,7 +3,7 @@ import { sampleTask } from '../../common/builders/taskBuilder';
 import { taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import request from '../../common/utils/request';
 import { expectResponse } from '../../common/utils/testUtil';
-import dateUtil from '../../../src/core/utils/dateUtil';
+import dateUtil from '../../../src/core/utils/dateParser';
 import { Task } from '../../../src/task/domain/task';
 
 describe('Get task component test', () => {

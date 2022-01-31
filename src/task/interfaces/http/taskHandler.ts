@@ -2,7 +2,7 @@ import { AppContext } from '../../../core/app/context/appContext';
 import { addTaskUseCaseFactory } from '../../usecase/addTaskUseCase';
 import { Task } from '../../domain/task';
 import httpResponse from '../../../core/interfaces/http/httpResponse';
-import dateUtil from '../../../core/utils/dateUtil';
+import dateUtil from '../../../core/utils/dateParser';
 import { httpRequest } from '../../../core/interfaces/http/httpRequest';
 import { getTaskUseCaseFactory } from '../../usecase/getTaskUseCase';
 

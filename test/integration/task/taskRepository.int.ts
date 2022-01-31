@@ -3,6 +3,7 @@ import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../s
 import dbTestSetup from '../../common/utils/dbTestSetup';
 import { Knex } from 'knex';
 import { Task } from '../../../src/task/domain/task';
+import dayjs from 'dayjs';
 
 describe('taskRepository integration test', () => {
   let db: Knex;
@@ -69,5 +70,36 @@ describe('taskRepository integration test', () => {
     // THEN
     const onDb = await taskRepository.findById(result.id);
     expect(onDb).toStrictEqual({ ...task, id: result.id });
+  });
+
+  it('GIVEN changed task WHEN update THEN update task on db and return updated task', async () => {
+    // GIVEN
+    const updatedTask = taskBuilder(tasksOnDb[1])
+      .withName('updated task')
+      .withDescription('updated task description')
+      .withColor('#111111')
+      .withUpdate(dayjs.utc('2022-01-31 10:10:10'))
+      .valueOf();
+
+    // WHEN
+    const result = await taskRepository.update(updatedTask);
+
+    // THEN
+    const onDb = await taskRepository.findById(updatedTask.id);
+    expect(onDb).toStrictEqual(updatedTask);
+    expect(result).toStrictEqual(updatedTask);
+  });
+
+  it('GIVEN not existing task WHEN update THEN throw exception', async () => {
+    // GIVEN
+    // @ts-ignore
+    const notExistingTask = taskBuilder(tasksOnDb[1]).withId(321).valueOf();
+
+    // WHEN
+
+    // THEN
+    await expect(async () => {
+      await taskRepository.update(notExistingTask);
+    }).rejects.toThrow('TaskNotFound');
   });
 });
