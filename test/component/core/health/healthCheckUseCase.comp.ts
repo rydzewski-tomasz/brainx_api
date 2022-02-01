@@ -1,6 +1,6 @@
 import { initFullEnv } from '../../../common/setup/initFullEnv';
 import request from '../../../common/utils/request';
-import { expectResponse } from '../../../common/utils/testUtil';
+import { expectResponse } from '../../../common/assertions/commonAssertions';
 
 describe('HealthCheck component test', () => {
   initFullEnv();

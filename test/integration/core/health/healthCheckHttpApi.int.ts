@@ -1,7 +1,7 @@
 import * as healthUseCase from '../../../../src/core/health/usecase/healthUseCase';
 import { createEmptySuccessResult, createErrorResult } from '../../../../src/core/utils/result';
 import request from '../../../common/utils/request';
-import { expectResponse } from '../../../common/utils/testUtil';
+import { expectResponse } from '../../../common/assertions/commonAssertions';
 import { HealthError } from '../../../../src/core/health/usecase/healthUseCase';
 import { initHttpEnv } from '../../../common/setup/initFullEnv';
 

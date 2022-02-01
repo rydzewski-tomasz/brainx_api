@@ -5,8 +5,10 @@ import httpResponse from '../../../core/interfaces/http/httpResponse';
 import dateUtil from '../../../core/utils/dateParser';
 import { httpRequest } from '../../../core/interfaces/http/httpRequest';
 import { getTaskUseCaseFactory } from '../../usecase/getTaskUseCase';
+import { updateTaskUseCaseFactory } from '../../usecase/updateTaskUseCase';
 
 export type AddTaskRequestBody = Pick<Task, 'name' | 'description' | 'color'>;
+export type UpdateTaskRequestBody = Partial<Pick<Task, 'name' | 'color' | 'description'>>;
 
 export async function addTaskHandler(ctx: AppContext) {
   const addTaskUseCase = addTaskUseCaseFactory(ctx);
@@ -26,7 +28,21 @@ export async function getTaskHandler(ctx: AppContext) {
   if (result.isValid) {
     httpResponse(ctx).createSuccessResponse(200, parseResponseBody(result.value));
   } else {
-    httpResponse(ctx).createErrorResponse(404, { type: 'NotFound', message: 'Task not found' });
+    httpResponse(ctx).createErrorResponse(404, { type: result.error, message: 'Task not found' });
+  }
+}
+
+export async function updateTaskHandler(ctx: AppContext) {
+  const updateTaskUseCase = updateTaskUseCaseFactory(ctx);
+  const taskId = httpRequest(ctx).getPathParamAsNumber('taskId');
+  const requestBody: UpdateTaskRequestBody = ctx.request.body;
+
+  const result = await updateTaskUseCase(taskId, requestBody);
+
+  if (result.isValid) {
+    httpResponse(ctx).createSuccessResponse(200, parseResponseBody(result.value));
+  } else {
+    httpResponse(ctx).createErrorResponse(404, { type: result.error, message: 'Task not found' });
   }
 }
 

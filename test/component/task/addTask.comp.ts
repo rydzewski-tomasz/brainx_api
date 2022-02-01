@@ -1,7 +1,7 @@
 import { dbClient, initFullEnv } from '../../common/setup/initFullEnv';
 import { AddTaskRequestBody } from '../../../src/task/interfaces/http/taskHandler';
 import request from '../../common/utils/request';
-import { expectResponse } from '../../common/utils/testUtil';
+import { expectResponse } from '../../common/assertions/commonAssertions';
 import { taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import { Task } from '../../../src/task/domain/task';
 

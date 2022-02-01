@@ -7,17 +7,20 @@ import { promisify } from 'util';
 import path from 'path';
 import dbTestSetup from '../utils/dbTestSetup';
 import { AddressInfo } from 'net';
+import dayjs from 'dayjs';
 
 let appServer: Server;
 export let requestUtil: SuperTest<any>;
 const config = createConfig();
 export let dbClient: AppDbClient;
+export const currentDate = dayjs.utc('2022-01-31 22:00');
+const clock = { now: () => currentDate };
 
 export function initFullEnv() {
   return {
     beforeAll: beforeAll(async () => {
       dbClient = await createDbClient();
-      startTestApp({ config, dbClient });
+      startTestApp({ config, dbClient, clock });
     }),
     afterAll: afterAll(async () => {
       await stopTestApp();
@@ -30,7 +33,7 @@ export function initHttpEnv() {
   return {
     beforeAll: beforeAll(async () => {
       dbClient = { getDb: jest.fn() };
-      startTestApp({ config, dbClient });
+      startTestApp({ config, dbClient, clock });
     }),
     afterAll: afterAll(async () => {
       await stopTestApp();

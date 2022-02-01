@@ -1,7 +1,7 @@
 import { Task, taskModel } from '../domain/task';
 import { createErrorResult, createSuccessResult, Result } from '../../core/utils/result';
 import { AppContext } from '../../core/app/context/appContext';
-import { TaskRepository } from '../interfaces/db/taskRepository';
+import { TaskRepository, taskRepositoryFactory } from '../interfaces/db/taskRepository';
 import { Clock } from '../../core/utils/clock';
 
 export enum UpdateTaskErrorType {
@@ -11,8 +11,10 @@ export enum UpdateTaskErrorType {
 type ToUpdate = Partial<Pick<Task, 'name' | 'color' | 'description'>>;
 export type UpdateTaskUseCase = (taskId: number, toUpdate: ToUpdate) => Promise<Result<Task, UpdateTaskErrorType>>;
 
-// @ts-ignore
-export function updateTaskUseCaseFactory(_: AppContext): UpdateTaskUseCase {}
+export function updateTaskUseCaseFactory({ dbClient, clock }: AppContext): UpdateTaskUseCase {
+  const taskRepository = taskRepositoryFactory(dbClient);
+  return updateTaskUseCase({ taskRepository, clock });
+}
 
 export function updateTaskUseCase({ taskRepository, clock }: { taskRepository: TaskRepository; clock: Clock }): UpdateTaskUseCase {
   return async (taskId, toUpdate) => {

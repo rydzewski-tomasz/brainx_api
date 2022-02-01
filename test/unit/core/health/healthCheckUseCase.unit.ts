@@ -1,6 +1,6 @@
 import { HealthRepository } from '../../../../src/core/health/interfaces/db/healthRepository';
 import { HealthError, healthUseCase } from '../../../../src/core/health/usecase/healthUseCase';
-import { expectResult } from '../../../common/utils/testUtil';
+import { expectResult } from '../../../common/assertions/commonAssertions';
 import { Success } from '../../../../src/core/utils/result';
 
 describe('Unit test healthCheckUseCase', () => {

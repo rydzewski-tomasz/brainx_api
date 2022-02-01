@@ -1,6 +1,6 @@
 import { TaskRepository } from '../../../../src/task/interfaces/db/taskRepository';
 import { UpdateTaskErrorType, updateTaskUseCase } from '../../../../src/task/usecase/updateTaskUseCase';
-import { expectResult } from '../../../common/utils/testUtil';
+import { expectResult } from '../../../common/assertions/commonAssertions';
 import { taskBuilder } from '../../../common/builders/taskBuilder';
 import { Clock } from '../../../../src/core/utils/clock';
 import dayjs from 'dayjs';

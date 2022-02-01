@@ -2,9 +2,8 @@ import { dbClient, initFullEnv } from '../../common/setup/initFullEnv';
 import { sampleTask } from '../../common/builders/taskBuilder';
 import { taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import request from '../../common/utils/request';
-import { expectResponse } from '../../common/utils/testUtil';
-import dateUtil from '../../../src/core/utils/dateParser';
 import { Task } from '../../../src/task/domain/task';
+import { expectTaskResponse } from '../../common/assertions/taskAssertions';
 
 describe('Get task component test', () => {
   initFullEnv();
@@ -24,7 +23,6 @@ describe('Get task component test', () => {
     const response = await request.get(`${url}/${existingTaskId}`);
 
     // THEN
-    const expectedResponseBody = { ...task, create: dateUtil.toText(task.create), update: task.update && dateUtil.toText(task.update) };
-    expectResponse(response).toBeSuccess(200, expectedResponseBody);
+    expectTaskResponse(response).toBeSuccess(200, task);
   });
 });

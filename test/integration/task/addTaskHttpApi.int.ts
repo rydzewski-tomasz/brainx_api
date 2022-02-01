@@ -2,9 +2,9 @@ import { initHttpEnv } from '../../common/setup/initFullEnv';
 import * as addTaskUseCase from '../../../src/task/usecase/addTaskUseCase';
 import { sampleTask } from '../../common/builders/taskBuilder';
 import request from '../../common/utils/request';
-import { expectResponse } from '../../common/utils/testUtil';
-import dateUtil from '../../../src/core/utils/dateParser';
+import { expectResponse } from '../../common/assertions/commonAssertions';
 import { HttpErrorType } from '../../../src/core/app/middleware/errorMiddleware';
+import { expectTaskResponse } from '../../common/assertions/taskAssertions';
 
 describe('Add task http api integration tests', () => {
   initHttpEnv();
@@ -21,8 +21,7 @@ describe('Add task http api integration tests', () => {
     const response = await request.post(url, requestBody);
 
     // THEN
-    const expectedResponseBody = { ...task, create: dateUtil.toText(task.create), update: task.update && dateUtil.toText(task.update) };
-    expectResponse(response).toBeSuccess(201, expectedResponseBody);
+    expectTaskResponse(response).toBeSuccess(201, task);
   });
 
   it('GIVEN invalid request body WHEN addTask THEN return status 400 with errorMiddleware', async () => {
