@@ -3,18 +3,24 @@ import { Clock, clockFactory } from '../../core/utils/clock';
 
 export type Color = string;
 
+export enum TaskStatus {
+  ACTIVE = 'ACTIVE',
+  REMOVED = 'REMOVED'
+}
+
 export interface Task {
   id: number;
   name: string;
   color: Color;
   description: string;
+  status: TaskStatus;
   create: dayjs.Dayjs;
   update?: dayjs.Dayjs;
 }
 
 export const taskFactory = {
   createTask(input: Pick<Task, 'name' | 'color' | 'description'>): Task {
-    return { ...input, id: 0, create: dayjs.utc() };
+    return { ...input, id: 0, create: dayjs.utc(), status: TaskStatus.ACTIVE };
   }
 };
 

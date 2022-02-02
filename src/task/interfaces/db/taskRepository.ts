@@ -3,7 +3,7 @@ import { DbContext } from '../../../core/app/context/appContext';
 import dateUtil from '../../../core/utils/dateParser';
 
 export const TaskTableName = 'task';
-const selectedColumns = ['id', 'name', 'color', 'description', 'create', 'update'];
+const selectedColumns = ['id', 'name', 'color', 'status', 'description', 'create', 'update'];
 
 export interface TaskRepository {
   findById: (id: number) => Promise<Task | null>;
@@ -27,6 +27,7 @@ export function taskRepositoryFactory(dbContext: DbContext): TaskRepository {
         .insert({
           name: input.name,
           color: input.color,
+          status: input.status,
           description: input.description,
           create: dateUtil.toText(input.create),
           update: input.update && dateUtil.toText(input.update)
@@ -39,6 +40,7 @@ export function taskRepositoryFactory(dbContext: DbContext): TaskRepository {
         .update({
           name: input.name,
           color: input.color,
+          status: input.status,
           description: input.description,
           update: input.update && dateUtil.toText(input.update)
         })
@@ -60,6 +62,7 @@ function parseFromDb(input: any): Task {
     id: +input.id,
     name: input.name,
     color: input.color,
+    status: input.status,
     description: input.description,
     create: dateUtil.fromDbDate(input.create),
     update: input.update ? dateUtil.fromDbDate(input.update) : undefined
