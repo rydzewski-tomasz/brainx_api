@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { taskBuilder } from '../../../common/builders/taskBuilder';
-import { taskModel } from '../../../../src/task/domain/task';
+import { taskModel, TaskStatus } from '../../../../src/task/domain/task';
 import { Clock } from '../../../../src/core/utils/clock';
 
 describe('Task unit tests', () => {
@@ -16,5 +16,16 @@ describe('Task unit tests', () => {
 
     // THEN
     expect(result).toStrictEqual({ ...task, name: 'updated name', description: 'updated description', color: '#222222', update: currentDate });
+  });
+
+  it('GIVEN task WHEN remove THEN return task with REMOVED status', async () => {
+    // GIVEN
+    const task = taskBuilder().withStatus(TaskStatus.ACTIVE).valueOf();
+
+    // WHEN
+    const result = taskModel(task).remove(clock);
+
+    // THEN
+    expect(result).toStrictEqual({ ...task, status: TaskStatus.REMOVED, update: currentDate });
   });
 });

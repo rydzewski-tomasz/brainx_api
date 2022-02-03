@@ -7,13 +7,12 @@ import { promisify } from 'util';
 import path from 'path';
 import dbTestSetup from '../utils/dbTestSetup';
 import { AddressInfo } from 'net';
-import dayjs from 'dayjs';
+import { currentDate } from '../mock/clock.mock';
 
 let appServer: Server;
 export let requestUtil: SuperTest<any>;
 const config = createConfig();
 export let dbClient: AppDbClient;
-export const currentDate = dayjs.utc('2022-01-31 22:00');
 const clock = { now: () => currentDate };
 
 export function initFullEnv() {

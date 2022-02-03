@@ -6,6 +6,7 @@ import dateUtil from '../../../core/utils/dateParser';
 import { httpRequest } from '../../../core/interfaces/http/httpRequest';
 import { getTaskUseCaseFactory } from '../../usecase/getTaskUseCase';
 import { updateTaskUseCaseFactory } from '../../usecase/updateTaskUseCase';
+import { removeTaskUseCaseFactory } from '../../usecase/removeTaskUseCase';
 
 export type AddTaskRequestBody = Pick<Task, 'name' | 'description' | 'color'>;
 export type UpdateTaskRequestBody = Partial<Pick<Task, 'name' | 'color' | 'description'>>;
@@ -41,6 +42,19 @@ export async function updateTaskHandler(ctx: AppContext) {
 
   if (result.isValid) {
     httpResponse(ctx).createSuccessResponse(200, parseResponseBody(result.value));
+  } else {
+    httpResponse(ctx).createErrorResponse(404, { type: result.error, message: 'Task not found' });
+  }
+}
+
+export async function removeTaskHandler(ctx: AppContext) {
+  const removeTaskUseCase = removeTaskUseCaseFactory(ctx);
+  const taskId = httpRequest(ctx).getPathParamAsNumber('taskId');
+
+  const result = await removeTaskUseCase(taskId);
+
+  if (result.isValid) {
+    httpResponse(ctx).createSuccessResponse(200, { id: taskId });
   } else {
     httpResponse(ctx).createErrorResponse(404, { type: result.error, message: 'Task not found' });
   }

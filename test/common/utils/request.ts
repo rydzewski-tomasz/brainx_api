@@ -18,7 +18,7 @@ async function putRequest(url: string, requestBody: any, accessToken?: string): 
   return makeRequest(request, accessToken, requestBody);
 }
 
-async function deleteRequest(url: string, requestBody: any, accessToken?: string): Promise<Response> {
+async function deleteRequest(url: string, requestBody?: any, accessToken?: string): Promise<Response> {
   const request = requestUtil.delete(url);
   return makeRequest(request, accessToken, requestBody);
 }

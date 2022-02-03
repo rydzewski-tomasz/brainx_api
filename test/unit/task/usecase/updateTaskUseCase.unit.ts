@@ -2,28 +2,24 @@ import { TaskRepository } from '../../../../src/task/interfaces/db/taskRepositor
 import { UpdateTaskErrorType, updateTaskUseCase } from '../../../../src/task/usecase/updateTaskUseCase';
 import { expectResult } from '../../../common/assertions/commonAssertions';
 import { taskBuilder } from '../../../common/builders/taskBuilder';
-import { Clock } from '../../../../src/core/utils/clock';
-import dayjs from 'dayjs';
 import { Task } from '../../../../src/task/domain/task';
+import { clockMock, currentDate } from '../../../common/mock/clock.mock';
+import { taskRepositoryMock } from '../../../common/mock/taskRepository.mock';
 
 type ToUpdate = Partial<Pick<Task, 'name' | 'color' | 'description'>>;
 
 describe('UpdateTaskUseCase unit test', () => {
-  let currentDate: dayjs.Dayjs;
-  let clock: Clock;
   let task: Task;
   let taskRepository: TaskRepository;
   let toUpdate: ToUpdate;
   let onDb: Task[];
 
   beforeEach(() => {
-    currentDate = dayjs.utc('2022-01-31 22:00');
-    clock = { now: () => currentDate };
     onDb = [];
     task = taskBuilder().withId(123).valueOf();
     toUpdate = { name: 'updated name', description: 'updated description', color: '#333333' };
     taskRepository = {
-      insert: async (task) => task,
+      ...taskRepositoryMock,
       findById: async (id) => (task.id === id ? task : null),
       update: async (task) => {
         onDb.push(task);
@@ -37,7 +33,7 @@ describe('UpdateTaskUseCase unit test', () => {
     const notExistingTaskId = 125;
 
     // WHEN
-    const result = await updateTaskUseCase({ taskRepository, clock })(notExistingTaskId, toUpdate);
+    const result = await updateTaskUseCase({ taskRepository, clock: clockMock })(notExistingTaskId, toUpdate);
 
     // THEN
     expectResult(result).toBeError(UpdateTaskErrorType.TaskNotFound);
@@ -48,7 +44,7 @@ describe('UpdateTaskUseCase unit test', () => {
     const existingTaskId = task.id;
 
     // WHEN
-    const result = await updateTaskUseCase({ taskRepository, clock })(existingTaskId, toUpdate);
+    const result = await updateTaskUseCase({ taskRepository, clock: clockMock })(existingTaskId, toUpdate);
 
     // THEN
     expectResult(result).toBeSuccess({ ...task, name: 'updated name', description: 'updated description', color: '#333333', update: currentDate });
@@ -59,7 +55,7 @@ describe('UpdateTaskUseCase unit test', () => {
     const existingTaskId = task.id;
 
     // WHEN
-    await updateTaskUseCase({ taskRepository, clock })(existingTaskId, toUpdate);
+    await updateTaskUseCase({ taskRepository, clock: clockMock })(existingTaskId, toUpdate);
 
     // THEN
     expect(onDb).toStrictEqual([{ ...task, name: 'updated name', description: 'updated description', color: '#333333', update: currentDate }]);

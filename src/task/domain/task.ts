@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Clock, clockFactory } from '../../core/utils/clock';
+import { Clock } from '../../core/utils/clock';
 
 export type Color = string;
 
@@ -26,7 +26,7 @@ export const taskFactory = {
 
 export function taskModel(task: Task) {
   return {
-    set: ({ name, color, description }: Partial<Pick<Task, 'name' | 'color' | 'description'>>, clock: Clock = clockFactory()): Task => {
+    set: ({ name, color, description }: Partial<Pick<Task, 'name' | 'color' | 'description'>>, clock: Clock): Task => {
       return {
         ...task,
         name: name || task.name,
@@ -34,6 +34,7 @@ export function taskModel(task: Task) {
         description: description || task.description,
         update: clock.now()
       };
-    }
+    },
+    remove: (clock: Clock) => ({ ...task, status: TaskStatus.REMOVED, update: clock.now() })
   };
 }

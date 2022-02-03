@@ -9,37 +9,35 @@ export function expectResponse(res: Response): {
 } {
   return {
     toBeSuccess: (expStatus: SuccessHttpStatus, data?: any) => {
-      if (res.status != expStatus) {
-        console.log(`Expected success status ${expStatus} but got ${res.status} with body: ${JSON.stringify(res.body)}`);
-      }
+      const expectedBody = data ? { status: HttpResponseStatus.SUCCESS, messages: [], data } : { status: HttpResponseStatus.SUCCESS, messages: [] };
 
-      expect(res.status).toEqual(expStatus);
-      if (data === undefined) {
-        expect(res.body).toStrictEqual({ status: HttpResponseStatus.SUCCESS, messages: [] });
-      } else {
-        expect(res.body).toStrictEqual({ status: HttpResponseStatus.SUCCESS, messages: [], data });
-      }
+      expect({
+        status: res.status,
+        body: res.body
+      }).toStrictEqual({
+        status: expStatus,
+        body: expectedBody
+      });
     },
     toMatchSuccess: (expStatus: SuccessHttpStatus, data: any) => {
-      if (res.status != expStatus) {
-        console.log(`Expected success status ${expStatus} but got ${res.status} with body: ${JSON.stringify(res.body)}`);
-      }
-
       expect(res.status).toEqual(expStatus);
       expect(res.body.status).toEqual(HttpResponseStatus.SUCCESS);
       expect(res.body.data).toMatchObject(data);
     },
     toBeError: (expStatus: ErrorHttpStatus, ...expErrors: { type: string; field?: string }[]) => {
-      if (res.status != expStatus) {
-        console.log(`Expected error status ${expStatus} but got ${res.status} with body: ${JSON.stringify(res.body)}`);
-      }
-
       const messages = res.body.messages?.map(({ type, field }: any) => {
         return field ? { type, field } : { type };
       });
-      expect(res.status).toEqual(expStatus);
-      expect(res.body.status).toEqual(HttpResponseStatus.FAIL);
-      expect(messages).toStrictEqual(expErrors);
+
+      expect({
+        status: res.status,
+        bodyStatus: res.body.status,
+        messages: messages
+      }).toStrictEqual({
+        status: expStatus,
+        bodyStatus: HttpResponseStatus.FAIL,
+        messages: expErrors
+      });
     }
   };
 }

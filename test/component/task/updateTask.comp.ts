@@ -1,9 +1,10 @@
-import { currentDate, dbClient, initFullEnv } from '../../common/setup/initFullEnv';
+import { dbClient, initFullEnv } from '../../common/setup/initFullEnv';
 import { Task } from '../../../src/task/domain/task';
 import { TaskRepository, taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import { taskBuilder } from '../../common/builders/taskBuilder';
 import request from '../../common/utils/request';
 import { expectTaskResponse } from '../../common/assertions/taskAssertions';
+import { currentDate } from '../../common/mock/clock.mock';
 
 describe('Update task component test', () => {
   initFullEnv();

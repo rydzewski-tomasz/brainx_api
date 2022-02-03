@@ -2,7 +2,7 @@ import { taskBuilder } from '../../common/builders/taskBuilder';
 import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../src/task/interfaces/db/taskRepository';
 import dbTestSetup from '../../common/utils/dbTestSetup';
 import { Knex } from 'knex';
-import { Task } from '../../../src/task/domain/task';
+import { Task, TaskStatus } from '../../../src/task/domain/task';
 import dayjs from 'dayjs';
 
 describe('taskRepository integration test', () => {
@@ -78,6 +78,7 @@ describe('taskRepository integration test', () => {
       .withName('updated task')
       .withDescription('updated task description')
       .withColor('#111111')
+      .withStatus(TaskStatus.REMOVED)
       .withUpdate(dayjs.utc('2022-01-31 10:10:10'))
       .valueOf();
 
