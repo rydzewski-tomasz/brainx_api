@@ -11,14 +11,10 @@ describe('taskRepository integration test', () => {
   let tasksOnDb: Task[];
 
   beforeAll(async () => {
-    await setupEnv();
-  });
-
-  async function setupEnv() {
     const dbClient = await dbTestSetup.createDb();
     taskRepository = taskRepositoryFactory(dbClient);
     db = dbClient.getDb();
-  }
+  });
 
   beforeEach(async () => {
     const tasksToAdd = [
@@ -38,7 +34,7 @@ describe('taskRepository integration test', () => {
     await dbTestSetup.dropDb();
   });
 
-  it('GIVEN not existing id WHEN findById THEN return undefined', async () => {
+  it('GIVEN not existing id WHEN findById THEN return null', async () => {
     // GIVEN
     const notExistingId = 164;
 
