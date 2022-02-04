@@ -1,9 +1,9 @@
-import { initHttpEnv } from '../../common/setup/initFullEnv';
-import * as removeTaskUseCase from '../../../src/task/usecase/removeTaskUseCase';
-import { createEmptySuccessResult, createErrorResult } from '../../../src/core/utils/result';
-import request from '../../common/utils/request';
-import { expectResponse } from '../../common/assertions/commonAssertions';
-import { RemoveTaskErrorType } from '../../../src/task/usecase/removeTaskUseCase';
+import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import * as removeTaskUseCase from '../../../../src/task/usecase/removeTaskUseCase';
+import { createEmptySuccessResult, createErrorResult } from '../../../../src/core/utils/result';
+import request from '../../../common/utils/request';
+import { expectResponse } from '../../../common/assertions/commonAssertions';
+import { RemoveTaskErrorType } from '../../../../src/task/usecase/removeTaskUseCase';
 
 describe('Remove task http api integration tests', () => {
   initHttpEnv();

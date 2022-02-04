@@ -1,8 +1,8 @@
-import { taskBuilder } from '../../common/builders/taskBuilder';
-import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../src/task/interfaces/db/taskRepository';
-import dbTestSetup from '../../common/utils/dbTestSetup';
+import { taskBuilder } from '../../../common/builders/taskBuilder';
+import { TaskRepository, taskRepositoryFactory, TaskTableName } from '../../../../src/task/interfaces/db/taskRepository';
+import dbTestSetup from '../../../common/utils/dbTestSetup';
 import { Knex } from 'knex';
-import { Task, TaskStatus } from '../../../src/task/domain/task';
+import { Task, TaskStatus } from '../../../../src/task/domain/task';
 import dayjs from 'dayjs';
 
 describe('taskRepository integration test', () => {

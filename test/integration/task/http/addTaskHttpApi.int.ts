@@ -1,10 +1,10 @@
-import { initHttpEnv } from '../../common/setup/initFullEnv';
-import * as addTaskUseCase from '../../../src/task/usecase/addTaskUseCase';
-import { sampleTask } from '../../common/builders/taskBuilder';
-import request from '../../common/utils/request';
-import { expectResponse } from '../../common/assertions/commonAssertions';
-import { HttpErrorType } from '../../../src/core/app/middleware/errorMiddleware';
-import { expectTaskResponse } from '../../common/assertions/taskAssertions';
+import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import * as addTaskUseCase from '../../../../src/task/usecase/addTaskUseCase';
+import { sampleTask } from '../../../common/builders/taskBuilder';
+import request from '../../../common/utils/request';
+import { expectResponse } from '../../../common/assertions/commonAssertions';
+import { HttpErrorType } from '../../../../src/core/app/middleware/errorMiddleware';
+import { expectTaskResponse } from '../../../common/assertions/taskAssertions';
 
 describe('Add task http api integration tests', () => {
   initHttpEnv();
