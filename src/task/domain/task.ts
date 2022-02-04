@@ -19,8 +19,8 @@ export interface Task {
 }
 
 export const taskFactory = {
-  createTask(input: Pick<Task, 'name' | 'color' | 'description'>): Task {
-    return { ...input, id: 0, create: dayjs.utc(), status: TaskStatus.ACTIVE };
+  createTask(input: Pick<Task, 'name' | 'color' | 'description'>, clock: Clock): Task {
+    return { ...input, id: 0, create: clock.now(), status: TaskStatus.ACTIVE };
   }
 };
 
