@@ -17,9 +17,9 @@ describe('userRepository integration test', () => {
 
   beforeEach(async () => {
     const usersToAdd = [
-      { ...userBuilder().withId(-1).withLogin('first').valueOf(), id: undefined },
-      { ...userBuilder().withId(-1).withLogin('second').valueOf(), id: undefined },
-      { ...userBuilder().withId(-1).withLogin('third').valueOf(), id: undefined }
+      { ...userBuilder().withId(-1).withLogin('first').withPassword('123').valueOf(), id: undefined },
+      { ...userBuilder().withId(-1).withLogin('second').withPassword('456').valueOf(), id: undefined },
+      { ...userBuilder().withId(-1).withLogin('third').withPassword('789').valueOf(), id: undefined }
     ];
     const ids = await db(UserTableName).insert(usersToAdd).returning('id');
     usersOnDb = usersToAdd.map((user, index) => ({ ...user, id: +ids[index] }));
@@ -65,5 +65,27 @@ describe('userRepository integration test', () => {
     // THEN
     const onDb = await userRepository.findById(result.id);
     expect(onDb).toStrictEqual({ ...user, id: result.id });
+  });
+
+  it('GIVEN not existing login WHEN findByLogin THEN return null', async () => {
+    // GIVEN
+    const notExistingLogin = 'notExisting';
+
+    // WHEN
+    const result = await userRepository.findByLogin(notExistingLogin);
+
+    // THEN
+    expect(result).toBeNull();
+  });
+
+  it('GIVEN existing login WHEN findByLogin THEN return user with that login', async () => {
+    // GIVEN
+    const user = usersOnDb[2];
+
+    // WHEN
+    const result = await userRepository.findByLogin(user.login);
+
+    // THEN
+    expect(result).toStrictEqual(user);
   });
 });

@@ -7,6 +7,7 @@ const selectedColumns = ['id', 'login', 'status', 'password', 'create', 'update'
 
 export interface UserRepository {
   findById: (id: number) => Promise<User | null>;
+  findByLogin: (login: string) => Promise<User | null>;
   insert: (user: User) => Promise<User>;
 }
 
@@ -18,6 +19,13 @@ export function userRepositoryFactory(dbContext: DbContext): UserRepository {
       const result = await db(UserTableName)
         .select(...selectedColumns)
         .where('id', id)
+        .first();
+      return result ? parseFromDb(result) : null;
+    },
+    findByLogin: async (login) => {
+      const result = await db(UserTableName)
+        .select(...selectedColumns)
+        .where('login', login)
         .first();
       return result ? parseFromDb(result) : null;
     },
