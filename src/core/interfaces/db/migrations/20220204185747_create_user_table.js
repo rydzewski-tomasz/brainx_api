@@ -3,7 +3,7 @@ exports.up = async function (knex) {
 
   return knex.schema.createTable('user', (table) => {
     table.bigIncrements('id').primary().notNullable();
-    table.string('login').unique().notNullable();
+    table.string('email').unique().notNullable();
     table.string('password').notNullable();
     table.specificType('status', 'user_status').notNullable();
     table.timestamp('create', { useTz: false, precision: 0 }).notNullable();

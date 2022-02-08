@@ -17,9 +17,9 @@ describe('userRepository integration test', () => {
 
   beforeEach(async () => {
     const usersToAdd = [
-      { ...userBuilder().withId(-1).withLogin('first').withPassword('123').valueOf(), id: undefined },
-      { ...userBuilder().withId(-1).withLogin('second').withPassword('456').valueOf(), id: undefined },
-      { ...userBuilder().withId(-1).withLogin('third').withPassword('789').valueOf(), id: undefined }
+      { ...userBuilder().withId(-1).withEmail('first').withPassword('123').valueOf(), id: undefined },
+      { ...userBuilder().withId(-1).withEmail('second').withPassword('456').valueOf(), id: undefined },
+      { ...userBuilder().withId(-1).withEmail('third').withPassword('789').valueOf(), id: undefined }
     ];
     const ids = await db(UserTableName).insert(usersToAdd).returning('id');
     usersOnDb = usersToAdd.map((user, index) => ({ ...user, id: +ids[index] }));
@@ -57,7 +57,7 @@ describe('userRepository integration test', () => {
 
   it('GIVEN valid user WHEN insert THEN save user on db', async () => {
     // GIVEN
-    const user = userBuilder().withLogin('test123').valueOf();
+    const user = userBuilder().withEmail('test123').valueOf();
 
     // WHEN
     const result = await userRepository.insert(user);
@@ -72,7 +72,7 @@ describe('userRepository integration test', () => {
     const notExistingLogin = 'notExisting';
 
     // WHEN
-    const result = await userRepository.findByLogin(notExistingLogin);
+    const result = await userRepository.findByEmail(notExistingLogin);
 
     // THEN
     expect(result).toBeNull();
@@ -83,7 +83,7 @@ describe('userRepository integration test', () => {
     const user = usersOnDb[2];
 
     // WHEN
-    const result = await userRepository.findByLogin(user.login);
+    const result = await userRepository.findByEmail(user.email);
 
     // THEN
     expect(result).toStrictEqual(user);

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { Clock } from '../../core/utils/clock';
+import bcrypt from 'bcryptjs';
 
 export enum UserStatus {
   ACTIVE = 'ACTIVE',
@@ -8,15 +9,17 @@ export enum UserStatus {
 
 export interface User {
   id: number;
-  login: string;
+  email: string;
   password: string;
   status: UserStatus;
   create: dayjs.Dayjs;
   update?: dayjs.Dayjs;
 }
 
-export const userFactory = {
-  createUser(input: Pick<User, 'login' | 'password'>, clock: Clock): User {
-    return { ...input, id: 0, create: clock.now(), status: UserStatus.ACTIVE };
-  }
-};
+export function userFactory(clock: Clock) {
+  return {
+    createUser(input: Pick<User, 'email' | 'password'>): User {
+      return { ...input, id: 0, create: clock.now(), status: UserStatus.ACTIVE, password: bcrypt.hashSync(input.password) };
+    }
+  };
+}

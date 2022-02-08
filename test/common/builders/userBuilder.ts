@@ -7,7 +7,7 @@ dayjs.extend(utc);
 export function sampleUser(): User {
   return {
     id: 123,
-    login: 'test_login',
+    email: 'test@test.com',
     password: 'testPassword',
     status: UserStatus.ACTIVE,
     create: dayjs.utc('2022-01-03 11:22'),
@@ -18,7 +18,7 @@ export function sampleUser(): User {
 export const userBuilder = (object: User = sampleUser()) => {
   return {
     withId: (id: User['id']) => userBuilder({ ...object, id }),
-    withLogin: (login: User['login']) => userBuilder({ ...object, login }),
+    withEmail: (email: User['email']) => userBuilder({ ...object, email }),
     withPassword: (password: User['password']) => userBuilder({ ...object, password }),
     withStatus: (status: User['status']) => userBuilder({ ...object, status }),
     withCreate: (create: User['create']) => userBuilder({ ...object, create }),

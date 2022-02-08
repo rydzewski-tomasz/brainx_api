@@ -3,11 +3,11 @@ import { DbContext } from '../../../core/app/context/appContext';
 import dateUtil from '../../../core/utils/dateParser';
 
 export const UserTableName = 'user';
-const selectedColumns = ['id', 'login', 'status', 'password', 'create', 'update'];
+const selectedColumns = ['id', 'email', 'status', 'password', 'create', 'update'];
 
 export interface UserRepository {
   findById: (id: number) => Promise<User | null>;
-  findByLogin: (login: string) => Promise<User | null>;
+  findByEmail: (email: string) => Promise<User | null>;
   insert: (user: User) => Promise<User>;
 }
 
@@ -22,17 +22,17 @@ export function userRepositoryFactory(dbContext: DbContext): UserRepository {
         .first();
       return result ? parseFromDb(result) : null;
     },
-    findByLogin: async (login) => {
+    findByEmail: async (email) => {
       const result = await db(UserTableName)
         .select(...selectedColumns)
-        .where('login', login)
+        .where('email', email)
         .first();
       return result ? parseFromDb(result) : null;
     },
     insert: async (input) => {
       const result = await db(UserTableName)
         .insert({
-          login: input.login,
+          email: input.email,
           password: input.password,
           status: input.status,
           create: dateUtil.toText(input.create),
@@ -47,7 +47,7 @@ export function userRepositoryFactory(dbContext: DbContext): UserRepository {
 function parseFromDb(input: any): User {
   return {
     id: +input.id,
-    login: input.login,
+    email: input.email,
     password: input.password,
     status: input.status,
     create: dateUtil.fromDbDate(input.create),
