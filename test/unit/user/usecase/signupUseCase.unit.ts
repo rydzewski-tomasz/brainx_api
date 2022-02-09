@@ -3,8 +3,9 @@ import { sampleUser } from '../../../common/builders/userBuilder';
 import { User, UserStatus } from '../../../../src/user/domain/user';
 import { SignupErrorType, signupUseCase } from '../../../../src/user/usecase/signupUseCase';
 import { expectResult } from '../../../common/assertions/commonAssertions';
-import { clockMock, currentDate } from '../../../common/mock/clock.mock';
-import bcrypt from 'bcryptjs';
+import { clockMock } from '../../../common/mock/clock.mock';
+import { expect } from 'chai';
+import { expectUser } from '../../../common/assertions/userAssertions';
 
 describe('SignupUseCase unit test', () => {
   let userRepository: UserRepository;
@@ -44,16 +45,9 @@ describe('SignupUseCase unit test', () => {
 
     // THEN
     const userOnDb = onDb[0];
-    expect({
-      email: userOnDb?.email,
-      status: userOnDb?.status,
-      create: userOnDb?.create,
-      isPasswordCorrect: bcrypt.compareSync(password, userOnDb?.password)
-    }).toStrictEqual({
-      email,
-      status: UserStatus.ACTIVE,
-      create: currentDate,
-      isPasswordCorrect: true
-    });
+    expect(onDb.length).equal(1);
+    expectUser(userOnDb).toHasEmail(email).toHasStatus(UserStatus.ACTIVE).toHasPassword(password);
   });
+
+  it.todo('return user');
 });
