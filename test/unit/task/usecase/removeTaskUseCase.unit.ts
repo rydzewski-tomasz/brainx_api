@@ -6,6 +6,7 @@ import { expectResult } from '../../../common/assertions/commonAssertions';
 import { Success } from '../../../../src/core/utils/result';
 import { clockMock, currentDate } from '../../../common/mock/clock.mock';
 import { taskRepositoryMock } from '../../../common/mock/taskRepository.mock';
+import { expect } from 'chai';
 
 describe('RemoveTaskUseCase unit test', () => {
   let taskRepository: TaskRepository;
@@ -55,6 +56,6 @@ describe('RemoveTaskUseCase unit test', () => {
     await removeTaskUseCase({ taskRepository, clock: clockMock })(existingTaskId);
 
     // THEN
-    expect(onDb).toStrictEqual([{ ...task, status: TaskStatus.REMOVED, update: currentDate }]);
+    expect(onDb).to.deep.equal([{ ...task, status: TaskStatus.REMOVED, update: currentDate }]);
   });
 });

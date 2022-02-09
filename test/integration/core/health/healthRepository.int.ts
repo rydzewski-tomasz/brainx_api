@@ -1,5 +1,6 @@
 import { HealthRepository, healthRepositoryFactory } from '../../../../src/core/health/interfaces/db/healthRepository';
 import dbTestSetup from '../../../common/utils/dbTestSetup';
+import { expect } from 'chai';
 
 describe('Test healthRepository', () => {
   let healthRepository: HealthRepository;
@@ -22,7 +23,7 @@ describe('Test healthRepository', () => {
     const result = await healthRepository.isDbConnected();
 
     // THEN
-    expect(result).toBeTruthy();
+    expect(result).to.true;
   });
 
   it('GIVEN invalid db connection WHEN isDbConnected THEN return false', async () => {
@@ -33,6 +34,6 @@ describe('Test healthRepository', () => {
     const result = await healthRepository.isDbConnected();
 
     // THEN
-    expect(result).toBeFalsy();
+    expect(result).to.false;
   });
 });

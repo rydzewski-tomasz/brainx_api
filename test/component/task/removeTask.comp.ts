@@ -5,6 +5,7 @@ import { taskBuilder } from '../../common/builders/taskBuilder';
 import request from '../../common/utils/request';
 import { expectResponse } from '../../common/assertions/commonAssertions';
 import { currentDate } from '../../common/mock/clock.mock';
+import { expect } from 'chai';
 
 describe('Remove task component test', () => {
   initFullEnv();
@@ -39,6 +40,6 @@ describe('Remove task component test', () => {
 
     // THEN
     const onDb = await taskRepository.findById(existingTaskId);
-    expect(onDb).toStrictEqual({ ...task, status: TaskStatus.REMOVED, update: currentDate });
+    expect(onDb).to.deep.equal({ ...task, status: TaskStatus.REMOVED, update: currentDate });
   });
 });

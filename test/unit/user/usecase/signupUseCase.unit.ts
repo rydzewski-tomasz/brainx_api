@@ -45,7 +45,7 @@ describe('SignupUseCase unit test', () => {
 
     // THEN
     const userOnDb = onDb[0];
-    expect(onDb.length).equal(1);
+    expect(onDb.length).eql(1);
     expectUser(userOnDb).toHasEmail(email).toHasStatus(UserStatus.ACTIVE).toHasPassword(password);
   });
 

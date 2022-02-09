@@ -4,6 +4,10 @@ import dbTestSetup from '../../../common/utils/dbTestSetup';
 import { Knex } from 'knex';
 import { Task, TaskStatus } from '../../../../src/task/domain/task';
 import dayjs from 'dayjs';
+import chai, { expect } from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+
+chai.use(chaiAsPromised);
 
 describe('taskRepository integration test', () => {
   let db: Knex;
@@ -42,7 +46,7 @@ describe('taskRepository integration test', () => {
     const result = await taskRepository.findById(notExistingId);
 
     // THEN
-    expect(result).toBeNull();
+    expect(result).to.be.null;
   });
 
   it('GIVEN existing id WHEN findById THEN return task', async () => {
@@ -53,7 +57,7 @@ describe('taskRepository integration test', () => {
     const result = await taskRepository.findById(existingTask.id);
 
     // THEN
-    expect(result).toStrictEqual(existingTask);
+    expect(result).to.deep.equal(existingTask);
   });
 
   it('GIVEN valid task WHEN insert THEN save task on db', async () => {
@@ -65,7 +69,7 @@ describe('taskRepository integration test', () => {
 
     // THEN
     const onDb = await taskRepository.findById(result.id);
-    expect(onDb).toStrictEqual({ ...task, id: result.id });
+    expect(onDb).to.deep.equal({ ...task, id: result.id });
   });
 
   it('GIVEN changed task WHEN update THEN update task on db and return updated task', async () => {
@@ -83,20 +87,17 @@ describe('taskRepository integration test', () => {
 
     // THEN
     const onDb = await taskRepository.findById(updatedTask.id);
-    expect(onDb).toStrictEqual(updatedTask);
-    expect(result).toStrictEqual(updatedTask);
+    expect(onDb).to.deep.equal(updatedTask);
+    expect(result).to.deep.equal(updatedTask);
   });
 
   it('GIVEN not existing task WHEN update THEN throw exception', async () => {
     // GIVEN
-    // @ts-ignore
     const notExistingTask = taskBuilder(tasksOnDb[1]).withId(321).valueOf();
 
     // WHEN
 
     // THEN
-    await expect(async () => {
-      await taskRepository.update(notExistingTask);
-    }).rejects.toThrow('TaskNotFound');
+    await expect(taskRepository.update(notExistingTask)).to.eventually.be.rejectedWith('TaskNotFound');
   });
 });

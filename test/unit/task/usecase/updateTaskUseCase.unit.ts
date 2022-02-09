@@ -5,6 +5,7 @@ import { taskBuilder } from '../../../common/builders/taskBuilder';
 import { Task } from '../../../../src/task/domain/task';
 import { clockMock, currentDate } from '../../../common/mock/clock.mock';
 import { taskRepositoryMock } from '../../../common/mock/taskRepository.mock';
+import { expect } from 'chai';
 
 type ToUpdate = Partial<Pick<Task, 'name' | 'color' | 'description'>>;
 
@@ -58,6 +59,6 @@ describe('UpdateTaskUseCase unit test', () => {
     await updateTaskUseCase({ taskRepository, clock: clockMock })(existingTaskId, toUpdate);
 
     // THEN
-    expect(onDb).toStrictEqual([{ ...task, name: 'updated name', description: 'updated description', color: '#333333', update: currentDate }]);
+    expect(onDb).to.deep.equal([{ ...task, name: 'updated name', description: 'updated description', color: '#333333', update: currentDate }]);
   });
 });

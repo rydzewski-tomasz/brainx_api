@@ -3,6 +3,7 @@ import { UserRepository, userRepositoryFactory, UserTableName } from '../../../.
 import { Knex } from 'knex/types/index';
 import { User } from '../../../../src/user/domain/user';
 import { userBuilder } from '../../../common/builders/userBuilder';
+import { expect } from 'chai';
 
 describe('userRepository integration test', () => {
   let db: Knex;
@@ -41,7 +42,7 @@ describe('userRepository integration test', () => {
     const result = await userRepository.findById(notExistingId);
 
     // THEN
-    expect(result).toBeNull();
+    expect(result).to.be.null;
   });
 
   it('GIVEN existing id WHEN findById THEN return user', async () => {
@@ -52,7 +53,7 @@ describe('userRepository integration test', () => {
     const result = await userRepository.findById(existingUser.id);
 
     // THEN
-    expect(result).toStrictEqual(existingUser);
+    expect(result).to.deep.equal(existingUser);
   });
 
   it('GIVEN valid user WHEN insert THEN save user on db', async () => {
@@ -64,7 +65,7 @@ describe('userRepository integration test', () => {
 
     // THEN
     const onDb = await userRepository.findById(result.id);
-    expect(onDb).toStrictEqual({ ...user, id: result.id });
+    expect(onDb).to.deep.equal({ ...user, id: result.id });
   });
 
   it('GIVEN not existing login WHEN findByLogin THEN return null', async () => {
@@ -75,7 +76,7 @@ describe('userRepository integration test', () => {
     const result = await userRepository.findByEmail(notExistingLogin);
 
     // THEN
-    expect(result).toBeNull();
+    expect(result).to.be.null;
   });
 
   it('GIVEN existing login WHEN findByLogin THEN return user with that login', async () => {
@@ -86,6 +87,6 @@ describe('userRepository integration test', () => {
     const result = await userRepository.findByEmail(user.email);
 
     // THEN
-    expect(result).toStrictEqual(user);
+    expect(result).to.deep.equal(user);
   });
 });

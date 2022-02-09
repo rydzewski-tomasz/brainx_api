@@ -1,6 +1,7 @@
 import { createErrorResult, createSuccessResult, Result } from '../../../src/core/utils/result';
 import { ErrorHttpStatus, HttpResponseStatus, SuccessHttpStatus } from '../../../src/core/interfaces/http/httpResponse';
 import { Response } from 'supertest';
+import { expect } from 'chai';
 
 export function expectResponse(res: Response): {
   toBeSuccess: (expStatus: SuccessHttpStatus, data?: any) => void;
@@ -14,15 +15,15 @@ export function expectResponse(res: Response): {
       expect({
         status: res.status,
         body: res.body
-      }).toStrictEqual({
+      }).to.deep.equal({
         status: expStatus,
         body: expectedBody
       });
     },
     toMatchSuccess: (expStatus: SuccessHttpStatus, data: any) => {
-      expect(res.status).toEqual(expStatus);
-      expect(res.body.status).toEqual(HttpResponseStatus.SUCCESS);
-      expect(res.body.data).toMatchObject(data);
+      expect(res.status).to.equal(expStatus);
+      expect(res.body.status).to.equal(HttpResponseStatus.SUCCESS);
+      expect(res.body.data).to.contain(data);
     },
     toBeError: (expStatus: ErrorHttpStatus, ...expErrors: { type: string; field?: string }[]) => {
       const messages = res.body.messages?.map(({ type, field }: any) => {
@@ -33,7 +34,7 @@ export function expectResponse(res: Response): {
         status: res.status,
         bodyStatus: res.body.status,
         messages: messages
-      }).toStrictEqual({
+      }).to.deep.equal({
         status: expStatus,
         bodyStatus: HttpResponseStatus.FAIL,
         messages: expErrors
@@ -51,16 +52,16 @@ export function expectResult<T, R>(
 } {
   return {
     toBeSuccess: (value) => {
-      expect(result).toStrictEqual(createSuccessResult(value));
+      expect(result).to.deep.equal(createSuccessResult(value));
     },
     toMatchSuccess: (value) => {
-      expect(result.isValid).toBeTruthy();
+      expect(result.isValid).to.true;
       if (result.isValid) {
-        expect(result.value).toMatchObject(value);
+        expect(result.value).to.contain(value);
       }
     },
     toBeError: (error) => {
-      expect(result).toStrictEqual(createErrorResult(error));
+      expect(result).to.deep.equal(createErrorResult(error));
     }
   };
 }

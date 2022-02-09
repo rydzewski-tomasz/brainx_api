@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { Clock } from '../../../../src/core/utils/clock';
 import { sampleUserTokenRegister, userTokenRegisterBuilder } from '../../../common/builders/userTokenRegisterBuilder';
+import { expect } from 'chai';
 
 dayjs.extend(utc);
 
@@ -20,7 +21,7 @@ describe('UserTokens unit tests', () => {
     const accessToken = userTokensFactory(config, clockMock).generateAccessToken(payload);
 
     // THEN
-    expect(!!jwt.verify(accessToken, config.accessTokenKey)).toBeTruthy();
+    expect(!!jwt.verify(accessToken, config.accessTokenKey)).to.be.true;
   });
 
   it('GIVEN payload and secrets WHEN generateAccessToken THEN return accessToken with valid payload', async () => {
@@ -31,7 +32,7 @@ describe('UserTokens unit tests', () => {
 
     // THEN
     const accessTokenPayload = jwt.verify(accessToken, config.accessTokenKey);
-    expect(accessTokenPayload).toStrictEqual({
+    expect(accessTokenPayload).to.be.deep.equal({
       userId: payload.userId,
       iat: currentDate.unix(),
       exp: currentDate.add(5, 'minutes').unix()
@@ -46,7 +47,7 @@ describe('UserTokens unit tests', () => {
     const refreshToken = userTokensFactory(config, clockMock).generateRefreshToken(userTokenRegister);
 
     // THEN
-    expect(!!jwt.verify(refreshToken, config.refreshTokenKey)).toBeTruthy();
+    expect(!!jwt.verify(refreshToken, config.refreshTokenKey)).to.be.true;
   });
 
   it('GIVEN payload and secrets WHEN generateRefreshToken THEN return refreshToken with valid payload', async () => {
@@ -58,7 +59,7 @@ describe('UserTokens unit tests', () => {
 
     // THEN
     const refreshTokenPayload = jwt.verify(refreshToken, config.refreshTokenKey);
-    expect(refreshTokenPayload).toStrictEqual({
+    expect(refreshTokenPayload).to.be.deep.equal({
       tokenId: 123,
       userId: 456,
       iat: dayjs.utc('2022-02-01 10:30').unix(),
@@ -74,7 +75,7 @@ describe('UserTokens unit tests', () => {
     const result = userTokensFactory(config, clockMock).createUserTokenRegister(input);
 
     // THEN
-    expect(result).toStrictEqual({
+    expect(result).to.be.deep.equal({
       id: 0,
       userId: 555,
       status: UserTokenStatus.ACTIVE,

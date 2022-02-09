@@ -5,6 +5,7 @@ import { taskBuilder } from '../../common/builders/taskBuilder';
 import request from '../../common/utils/request';
 import { expectTaskResponse } from '../../common/assertions/taskAssertions';
 import { currentDate } from '../../common/mock/clock.mock';
+import { expect } from 'chai';
 
 describe('Update task component test', () => {
   initFullEnv();
@@ -41,6 +42,6 @@ describe('Update task component test', () => {
 
     // THEN
     const onDb = await taskRepository.findById(existingTaskId);
-    expect(onDb).toStrictEqual({ ...task, name: 'updated on db name', color: '#333333', description: 'updated on db description', update: currentDate });
+    expect(onDb).to.deep.equal({ ...task, name: 'updated on db name', color: '#333333', description: 'updated on db description', update: currentDate });
   });
 });

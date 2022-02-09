@@ -4,6 +4,7 @@ import request from '../../common/utils/request';
 import { expectResponse } from '../../common/assertions/commonAssertions';
 import { taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import { Task } from '../../../src/task/domain/task';
+import { expect } from 'chai';
 
 describe('Add task component test', () => {
   initFullEnv();
@@ -35,6 +36,6 @@ describe('Add task component test', () => {
     // THEN
     const taskId = body.data.id;
     const onDb = (await taskRepositoryFactory(dbClient).findById(taskId)) as Task;
-    expect(onDb).toMatchObject({ name: requestBody.name, description: requestBody.description, color: requestBody.color });
+    expect(onDb).to.contain({ name: requestBody.name, description: requestBody.description, color: requestBody.color });
   });
 });
