@@ -1,4 +1,4 @@
-import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import { initHttpEnv } from '../../../common/setup/initEnv';
 import { taskBuilder } from '../../../common/builders/taskBuilder';
 import request from '../../../common/utils/request';
 import { expectResponse } from '../../../common/assertions/commonAssertions';

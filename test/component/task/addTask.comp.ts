@@ -1,4 +1,4 @@
-import { dbClient, initFullEnv } from '../../common/setup/initFullEnv';
+import { dbClient, initFullEnv } from '../../common/setup/initEnv';
 import { AddTaskRequestBody } from '../../../src/task/interfaces/http/taskHandler';
 import request from '../../common/utils/request';
 import { expectResponse } from '../../common/assertions/commonAssertions';

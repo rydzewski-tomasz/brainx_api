@@ -1,4 +1,4 @@
-import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import { initHttpEnv } from '../../../common/setup/initEnv';
 import * as addTaskUseCase from '../../../../src/task/usecase/addTaskUseCase';
 import { sampleTask } from '../../../common/builders/taskBuilder';
 import request from '../../../common/utils/request';

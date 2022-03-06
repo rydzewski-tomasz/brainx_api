@@ -1,4 +1,4 @@
-import { initFullEnv } from '../../../common/setup/initFullEnv';
+import { initFullEnv } from '../../../common/setup/initEnv';
 import request from '../../../common/utils/request';
 import { expectResponse } from '../../../common/assertions/commonAssertions';
 

@@ -1,4 +1,4 @@
-import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import { initHttpEnv } from '../../../common/setup/initEnv';
 import * as removeTaskUseCase from '../../../../src/task/usecase/removeTaskUseCase';
 import { createEmptySuccessResult, createErrorResult } from '../../../../src/core/utils/result';
 import request from '../../../common/utils/request';

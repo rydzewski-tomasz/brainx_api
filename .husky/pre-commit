@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-docker-compose -f ./docker/test/docker-compose.test.yml up --exit-code-from brainx_test
+docker-compose -f ./docker/test/docker-compose.test.yml --profile startTests up --exit-code-from brainx_test

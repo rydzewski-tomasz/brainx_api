@@ -1,5 +1,5 @@
 import { Response, SuperAgentRequest } from 'superagent';
-import { requestUtil } from '../setup/initFullEnv';
+import { requestUtil } from '../setup/initEnv';
 
 export type UrlElement = number | string;
 

@@ -1,4 +1,4 @@
-import { dbClient, initFullEnv } from '../../common/setup/initFullEnv';
+import { dbClient, initFullEnv } from '../../common/setup/initEnv';
 import { sampleTask } from '../../common/builders/taskBuilder';
 import { taskRepositoryFactory } from '../../../src/task/interfaces/db/taskRepository';
 import request from '../../common/utils/request';

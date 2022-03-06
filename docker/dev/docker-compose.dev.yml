@@ -19,6 +19,7 @@ services:
     command: npm run start:dev
     depends_on:
       - brainx_migrate
+    profiles: ['api']
 
   brainx_migrate:
     build:
@@ -32,6 +33,7 @@ services:
     command: ./docker/wait-for-it.sh brainx_db:5432 -- npm run dbMigrate
     depends_on:
       - brainx_db
+    profiles: ['migrate']
 
   brainx_db:
     image: postgres:14.1

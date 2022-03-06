@@ -19,6 +19,7 @@ services:
     command: ./docker/wait-for-it.sh brainx_test_db:5432 -- bash -c "npm audit --audit-level=moderate && npm run lint && npm test"
     depends_on:
       - brainx_test_db
+    profiles: ['startTests']
 
   brainx_test_db:
     image: postgres:14.1
@@ -30,5 +31,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: test
       POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5202:5432"
     networks:
       - brainx_api_test_world

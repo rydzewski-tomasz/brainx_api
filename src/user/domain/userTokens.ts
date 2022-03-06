@@ -7,6 +7,14 @@ export enum UserTokenStatus {
   INACTIVE = 'INACTIVE'
 }
 
+export interface UserTokensConfig {
+  refreshTokenKey: string;
+  accessTokenPublicKey: string;
+  accessTokenPrivateKey: string;
+  refreshTokenLifetimeInM: number;
+  accessTokenLifeTimeInM: number;
+}
+
 export interface UserTokens {
   accessToken: string;
   refreshToken: string;
@@ -29,19 +37,11 @@ export interface AccessTokenPayload {
   userId: number;
 }
 
-export function userTokensFactory(
-  config: {
-    refreshTokenKey: string;
-    accessTokenKey: string;
-    refreshTokenLifetimeInM: number;
-    accessTokenLifeTimeInM: number;
-  },
-  clock: Clock
-) {
+export function userTokensFactory(config: UserTokensConfig, clock: Clock) {
   function generateAccessToken(input: { userId: number }): string {
     const now = clock.now();
     const payload = { userId: input.userId, iat: now.unix(), exp: now.add(config.accessTokenLifeTimeInM, 'minutes').unix() };
-    return jwt.sign(payload, config.accessTokenKey, { algorithm: 'HS256' });
+    return jwt.sign(payload, config.accessTokenPrivateKey, { algorithm: 'ES512' });
   }
 
   function generateRefreshToken(input: UserTokenRegister): string {

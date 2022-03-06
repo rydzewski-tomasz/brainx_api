@@ -3,7 +3,7 @@ import { createEmptySuccessResult, createErrorResult } from '../../../../src/cor
 import request from '../../../common/utils/request';
 import { expectResponse } from '../../../common/assertions/commonAssertions';
 import { HealthError } from '../../../../src/core/health/usecase/healthUseCase';
-import { initHttpEnv } from '../../../common/setup/initFullEnv';
+import { initHttpEnv } from '../../../common/setup/initEnv';
 
 describe('Test healthCheck http interface', () => {
   initHttpEnv();
